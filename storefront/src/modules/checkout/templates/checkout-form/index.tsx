@@ -1,7 +1,6 @@
 import { listCartShippingMethods } from "@lib/data/fulfillment"
 import { listCartPaymentMethods } from "@lib/data/payment"
 import { HttpTypes } from "@medusajs/types"
-import { updateCart, completeCart } from "@lib/data/cart" // Assuming you have these utility functions
 
 export default async function CheckoutForm({
   cart,
@@ -25,7 +24,7 @@ export default async function CheckoutForm({
     <div className="w-full max-w-2xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">Checkout</h1>
       
-      <form className="space-y-6">
+      <form>
         {/* Contact & Shipping Address Section */}
         <div>
           <h2 className="text-xl font-semibold mb-4">Contact & Shipping Information</h2>
@@ -93,7 +92,7 @@ export default async function CheckoutForm({
         </div>
 
         {/* Shipping Method Section */}
-        <div>
+        <div className="mt-6">
           <h2 className="text-xl font-semibold mb-4">Shipping Method</h2>
           <div className="space-y-2">
             {shippingMethods.map((method) => (
@@ -115,7 +114,7 @@ export default async function CheckoutForm({
         </div>
 
         {/* Payment Method Section */}
-        <div>
+        <div className="mt-6">
           <h2 className="text-xl font-semibold mb-4">Payment Method</h2>
           <div className="space-y-2">
             {paymentMethods.map((method) => (
@@ -137,32 +136,4 @@ export default async function CheckoutForm({
         </div>
 
         {/* Order Summary Section */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-          {cart.items.map((item) => (
-            <div key={item.id} className="flex justify-between mb-2">
-              <span>{item.title}</span>
-              <span>
-                {item.total / 100} {cart.region?.currency_code.toUpperCase()}
-              </span>
-            </div>
-          ))}
-          <div className="flex justify-between font-bold mt-4">
-            <span>Total</span>
-            <span>
-              {cart.total / 100} {cart.region?.currency_code.toUpperCase()}
-            </span>
-          </div>
-        </div>
-
-        {/* Submit Button */}
-        <button 
-          type="submit" 
-          className="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
-        >
-          Complete Order
-        </button>
-      </form>
-    </div>
-  )
-}
+        <div className="mt-6"></div>
