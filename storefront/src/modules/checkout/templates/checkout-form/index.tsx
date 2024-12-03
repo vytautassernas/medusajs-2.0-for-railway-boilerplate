@@ -1,14 +1,18 @@
+// src/modules/checkout/templates/checkout-form/index.tsx
+import React from 'react'
+import { HttpTypes } from "@medusajs/types"
 import { listCartShippingMethods } from "@lib/data/fulfillment"
 import { listCartPaymentMethods } from "@lib/data/payment"
-import { HttpTypes } from "@medusajs/types"
+
+interface CheckoutFormProps {
+  cart: HttpTypes.StoreCart | null
+  customer: HttpTypes.StoreCustomer | null
+}
 
 export default async function CheckoutForm({
   cart,
   customer,
-}: {
-  cart: HttpTypes.StoreCart | null
-  customer: HttpTypes.StoreCustomer | null
-}) {
+}: CheckoutFormProps) {
   if (!cart) {
     return null
   }
@@ -136,4 +140,32 @@ export default async function CheckoutForm({
         </div>
 
         {/* Order Summary Section */}
-        <div className="mt-6"></div>
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+          {cart.items.map((item) => (
+            <div key={item.id} className="flex justify-between mb-2">
+              <span>{item.title}</span>
+              <span>
+                {item.total / 100} {cart.region?.currency_code.toUpperCase()}
+              </span>
+            </div>
+          ))}
+          <div className="flex justify-between font-bold mt-4">
+            <span>Total</span>
+            <span>
+              {cart.total / 100} {cart.region?.currency_code.toUpperCase()}
+            </span>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <button 
+          type="submit" 
+          className="w-full mt-6 bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
+        >
+          Complete Order
+        </button>
+      </form>
+    </div>
+  )
+}
